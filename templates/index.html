@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>File checker</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.4.2/css/bulma.min.css">
+  </head>
+
+  <body>
+    <header class="hero is-primary">
+      <div class="hero-body">
+        <div class="container">
+          <h1 class="title">File checker</h1>
+          <p class="subtitle">SHA256 checksum calculator</p>
+        </div>
+      </div>
+    </header>
+
+    <main class="section">
+      <div class="container">
+        <form action="./" method="post" enctype="multipart/form-data">
+          <div class="columns">
+            <div class="column is-half">
+              <div class="content">
+                <p>
+                  This awesome application calculates check sum of your files using
+                  <a href="https://en.wikipedia.org/wiki/SHA-2">SHA256</a>
+                  algorithm and tells how many time you have uploaded the file.
+                  Just try and enjoy&nbsp;;)
+                </p>
+              </div>
+                <div class="field">
+                  <label for="file-input"></label>
+                  <p class="control">
+                    <input type="file" name="file" id="file-input">
+                  </p>
+                </div>
+
+                <div class="field">
+                  <p class="control">
+                    <button class="button is-primary" type="submit">
+                      Check file
+                    </button>
+                  </p>
+                </div>
+            </div>
+
+            <div class="column is-half">
+              <div id="messages">
+                {% for message in get_flashed_messages() %}
+                  <p class="notification is-warning">{{ message }}</p>
+                {% endfor %}
+              </div>
+
+              <div class="notification is-success content" id="checksum"
+                   {% if not checksum %}hidden{% endif %}>
+                <div class="field">
+                  <label for="checksum">Checksum of your file: </label>
+                  <p class="control">
+                    <input type="text" name="checksum" value="{{ checksum }}"
+                           id="checksum" class="input is-success" readonly>
+                  </p>
+                </div>
+
+                <div class="content">
+                  <p>
+                    The file was uploaded
+                    <b id="total">{%- if total == 1 %}
+                      only once
+                    {% else %}
+                      {{ total }} times
+                    {% endif %}</b>
+                  </p>
+
+                  <p>Try one more time or use another file.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="content has-text-centered">
+          <p>
+            <strong>File checker</strong> by Viktor Yakubiv.
+            The source code is licenced under
+            <a href="http://opensource.org/licenses/mit-license.php">MIT</a>.
+          </p>
+          <p>
+            <a class="icon"
+               href="https://github.com/viktor-yakubiv/filechecker">
+              <i class="fa fa-github"></i>
+            </a>
+          </p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

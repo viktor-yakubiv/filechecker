@@ -17,6 +17,10 @@ def index():
         return render()
 
     if request.method == 'POST':
+        if 'checksum' in request.form and request.form['checksum']:
+            checksum = request.form['checksum']
+            total = update(checksum)
+            return render(checksum=checksum, total=total)
         if 'file' not in request.files:
             flash('No file part')
             return redirect(request.url)
@@ -29,7 +33,26 @@ def index():
 
         if file:
             checksum = sha256(file.stream.read()).hexdigest()
-            return render(checksum=checksum, total=0)
+            total = update(checksum)
+            return render(checksum=checksum, total=total)
+
+
+def update(checksum):
+    try:
+        db_file = open('db.json')
+        db = json.load(db_file)
+        db_file.close()
+    except OSError:
+        db = {}
+
+    if checksum not in db:
+        db[checksum] = 0
+    db[checksum] += 1
+
+    with open('db.json', 'w+') as db_file:
+        json.dump(db, db_file)
+
+    return db[checksum]
 
 
 def render(**context):

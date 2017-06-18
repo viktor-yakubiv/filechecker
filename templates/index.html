@@ -5,6 +5,7 @@
     <title>File checker</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.4.2/css/bulma.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   </head>
 
   <body>
@@ -19,66 +20,68 @@
 
     <main class="section">
       <div class="container">
-        <form action="./" method="post" enctype="multipart/form-data">
-          <div class="columns">
-            <div class="column is-half">
-              <div class="content">
-                <p>
-                  This awesome application calculates check sum of your files using
-                  <a href="https://en.wikipedia.org/wiki/SHA-2">SHA256</a>
-                  algorithm and tells how many time you have uploaded the file.
-                  Just try and enjoy&nbsp;;)
-                </p>
-              </div>
-                <div class="field">
-                  <label for="file-input"></label>
-                  <p class="control">
-                    <input type="file" name="file" id="file-input">
-                  </p>
-                </div>
-
-                <div class="field">
-                  <p class="control">
-                    <button class="button is-primary" type="submit">
-                      Check file
-                    </button>
-                  </p>
-                </div>
+        <div class="columns">
+          <div class="column is-half">
+            <div class="content">
+              <p>
+                This awesome application calculates check sum of your files
+                using
+                <a href="https://en.wikipedia.org/wiki/SHA-2">SHA256</a>
+                algorithm and tells how many time you have uploaded the file.
+                Just try and enjoy&nbsp;;)
+              </p>
             </div>
 
-            <div class="column is-half">
-              <div id="messages">
-                {% for message in get_flashed_messages() %}
-                  <p class="notification is-warning">{{ message }}</p>
-                {% endfor %}
+            <form action="./" method="post" enctype="multipart/form-data">
+              <div class="field">
+                <label for="file-input"></label>
+                <p class="control">
+                  <input type="file" name="file" id="file-input">
+                </p>
               </div>
 
-              <div class="notification is-success content" id="checksum"
-                   {% if not checksum %}hidden{% endif %}>
-                <div class="field">
-                  <label for="checksum">Checksum of your file: </label>
-                  <p class="control">
-                    <input type="text" name="checksum" value="{{ checksum }}"
-                           id="checksum" class="input is-success" readonly>
-                  </p>
-                </div>
+              <div class="field">
+                <p class="control">
+                  <button class="button is-primary" type="submit">
+                    Check file
+                  </button>
+                </p>
+              </div>
+            </form>
+          </div>
 
-                <div class="content">
-                  <p>
-                    The file was uploaded
-                    <b id="total">{%- if total == 1 %}
-                      only once
-                    {% else %}
-                      {{ total }} times
-                    {% endif %}</b>
-                  </p>
+          <div class="column is-half">
+            <div id="messages">
+              {% for message in get_flashed_messages() %}
+                <p class="notification is-warning">{{ message }}</p>
+              {% endfor %}
+            </div>
 
-                  <p>Try one more time or use another file.</p>
-                </div>
+            <div class="notification is-success content" id="checksum"
+                 {% if not checksum %}hidden{% endif %}>
+              <div class="field">
+                <label for="checksum">Checksum of your file: </label>
+                <p class="control">
+                  <input type="text" value="{{ checksum }}"
+                         id="checksum" class="input is-success" readonly>
+                </p>
+              </div>
+
+              <div class="content">
+                <p>
+                  The file was uploaded
+                  <b id="total">{%- if total == 1 %}
+                    only once
+                  {% else %}
+                    {{ total }} times
+                  {% endif %}</b>
+                </p>
+
+                <p>Try one more time or use another file.</p>
               </div>
             </div>
           </div>
-        </form>
+        </div>
       </div>
     </main>
 

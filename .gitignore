@@ -36,8 +36,10 @@ env
 # Ignore database files
 *.sqlite*
 
-# Ignore local settings files
-/joovie/settings/local.py
+# Ignore databse
+db.json
 
 # Ignore secrets and *.key files
 *.key
+
+

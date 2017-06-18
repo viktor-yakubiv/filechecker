@@ -42,7 +42,7 @@ def update(checksum):
         db_file = open('db.json')
         db = json.load(db_file)
         db_file.close()
-    except OSError:
+    except (OSError, IOError):
         db = {}
 
     if checksum not in db:
